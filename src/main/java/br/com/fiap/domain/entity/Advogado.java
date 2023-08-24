@@ -1,23 +1,43 @@
 package br.com.fiap.domain.entity;
 
+import jakarta.persistence.*;
+import org.checkerframework.checker.units.qual.C;
+
+@Entity
+@Table(name = "T_ADVOGADO", uniqueConstraints =  {
+        @UniqueConstraint(name = "UK_NM_ADVOGADO", columnNames = {"NOAB_ADVOGADO"})
+})
 public class Advogado {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ADVOGADO")
+    @SequenceGenerator(name = "SQ_ADVOGADO", sequenceName = "SQ_ADVOGADO")
+    @Column(name = "ID_ADVOGADO")
     private Long id;
 
+    @Column(name = "NM_ADVOGADO")
     private String nome;
 
+    @Column(name = "NOAB_ADVOGADO", nullable = false)
     private String numeroOAB;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(
+            name = "ID_ESTADO",
+            referencedColumnName = "ID_ESTADO",
+            foreignKey = @ForeignKey(name = "FK_ESTADO_ADVOGADO"),
+            nullable = false
+    )
     private Estado estado;
 
     public Advogado() {
     }
 
     public Advogado(Long id, String nome, String numeroOAB, Estado estado) {
-        this.id = id;
-        this.nome = nome;
-        this.numeroOAB = numeroOAB;
-        this.estado = estado;
+        this.setId(id);
+        this.setNome(nome);
+        this.setNumeroOAB(numeroOAB);
+        this.setEstado(estado);
     }
 
     public Long getId() {
@@ -59,9 +79,9 @@ public class Advogado {
     @Override
     public String toString() {
         return "Advogado{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", numeroOAB='" + numeroOAB + '\'' +
+                "id=" + getId() +
+                ", nome='" + getNome() + '\'' +
+                ", numeroOAB='" + getNumeroOAB() + '\'' +
                 '}';
     }
 

@@ -1,17 +1,29 @@
 package br.com.fiap.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "T_TIPO_ACAO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_T_TIPO_ACAO", columnNames = "NM_TIPO_ACAO")
+})
+
 public class TipoDeAcao {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_ACAO")
+    @SequenceGenerator(name = "SQ_TIPO_ACAO", sequenceName = "SQ_TIPO_ACAO")
+    @Column(name = "ID_TIPO_ACAO")
     private Long id;
 
+    @Column(name = "NOME_TIPO_ACAO", nullable = false)
     private String nome;
 
     public TipoDeAcao() {
     }
 
     public TipoDeAcao(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
+        this.setId(id);
+        this.setNome(nome);
     }
 
 
@@ -37,8 +49,8 @@ public class TipoDeAcao {
     @Override
     public String toString() {
         return "TipoDeAcao{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
+                "id=" + getId() +
+                ", nome='" + getNome() + '\'' +
                 '}';
     }
 }

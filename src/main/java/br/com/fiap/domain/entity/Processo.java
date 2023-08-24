@@ -1,16 +1,41 @@
 package br.com.fiap.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "T_PROCESSO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NR_PROCESSO", columnNames = "NR_NUMERO")
+})
 public class Processo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PROCESSO")
+    @SequenceGenerator(name = "SQ_PROCESSO", sequenceName = "SQ_PROCESSO")
+    @Column(name = "ID_PROCESSO")
     private Long id;
 
+    @Column(name = "NR_PROCESSO", nullable = false)
     private String numero;
 
+    @Column(name = "PB_PROCESSO")
     private Boolean proBono;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(
+            name = "ID_ADVOGADO",
+            referencedColumnName = "ID_ADVOGADO",
+            foreignKey = @ForeignKey(name = "FK_ID_ADVOGADO"),
+            nullable = false
+    )
     private Advogado advogado;
 
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(
+            name = "ID_TP_ACAO",
+            referencedColumnName = "ID_TP_ACAO",
+            foreignKey = @ForeignKey(name = "FK_ID_TP_ACAO"),
+            nullable = false
+    )
     private TipoDeAcao tipoDeAcao;
 
 
@@ -18,11 +43,11 @@ public class Processo {
     }
 
     public Processo(Long id, String numero, Boolean proBono, Advogado advogado, TipoDeAcao tipoDeAcao) {
-        this.id = id;
-        this.numero = numero;
-        this.proBono = proBono;
-        this.advogado = advogado;
-        this.tipoDeAcao = tipoDeAcao;
+        this.setId(id);
+        this.setNumero(numero);
+        this.setProBono(proBono);
+        this.setAdvogado(advogado);
+        this.setTipoDeAcao(tipoDeAcao);
     }
 
     public Long getId() {
@@ -74,11 +99,11 @@ public class Processo {
     @Override
     public String toString() {
         return "Processo{" +
-                "id=" + id +
-                ", numero='" + numero + '\'' +
-                ", proBono=" + proBono +
-                ", advogado=" + advogado +
-                ", tipoDeAcao=" + tipoDeAcao +
+                "id=" + getId() +
+                ", numero='" + getNumero() + '\'' +
+                ", proBono=" + getProBono() +
+                ", advogado=" + getAdvogado() +
+                ", tipoDeAcao=" + getTipoDeAcao() +
                 '}';
     }
 }

@@ -1,20 +1,34 @@
 package br.com.fiap.domain.entity;
 
-public class Estado {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "T_ESTADO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NM_ESTADO", columnNames = {"NM_ESTADO"}),
+        @UniqueConstraint(name = "UK_SIGLA_ESTADO", columnNames = {""})
+})
+
+
+public class Estado {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_ESTADO")
+    @SequenceGenerator(name = "SQ_ESTADO", sequenceName = "SQ_ESTADO")
+    @Column(name = "ID_ESTADO")
     private Long id;
 
+    @Column(name = "NOME_ESTADO")
     private String nome;
 
+    @Column(name = "SIGLA_ESTADO")
     private String sigla;
 
     public Estado() {
     }
 
     public Estado(Long id, String nome, String sigla) {
-        this.id = id;
-        this.nome = nome;
-        this.sigla = sigla;
+        this.setId(id);
+        this.setNome(nome);
+        this.setSigla(sigla);
     }
 
 
@@ -48,9 +62,9 @@ public class Estado {
     @Override
     public String toString() {
         return "Estado{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", sigla='" + sigla + '\'' +
+                "id=" + getId() +
+                ", nome='" + getNome() + '\'' +
+                ", sigla='" + getSigla() + '\'' +
                 '}';
     }
 }
