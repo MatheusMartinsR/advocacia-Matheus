@@ -24,7 +24,7 @@ public class Processo {
     @JoinColumn(
             name = "ID_ADVOGADO",
             referencedColumnName = "ID_ADVOGADO",
-            foreignKey = @ForeignKey(name = "FK_ID_ADVOGADO"),
+            foreignKey = @ForeignKey(name = "FK_PROCESSO_ADVOGADO"),
             nullable = false
     )
     private Advogado advogado;

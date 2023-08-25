@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "T_ESTADO", uniqueConstraints = {
         @UniqueConstraint(name = "UK_NM_ESTADO", columnNames = {"NM_ESTADO"}),
-        @UniqueConstraint(name = "UK_SIGLA_ESTADO", columnNames = {""})
+        @UniqueConstraint(name = "UK_SIGLA_ESTADO", columnNames = {"SG_ESTADO"})
 })
 
 
@@ -16,10 +16,10 @@ public class Estado {
     @Column(name = "ID_ESTADO")
     private Long id;
 
-    @Column(name = "NOME_ESTADO")
+    @Column(name = "NOME_ESTADO", nullable = false)
     private String nome;
 
-    @Column(name = "SIGLA_ESTADO")
+    @Column(name = "SIGLA_ESTADO", nullable = false)
     private String sigla;
 
     public Estado() {
