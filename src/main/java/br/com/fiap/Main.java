@@ -33,7 +33,7 @@ public class Main {
         TipoDeAcao tipoDeAcao2 = new TipoDeAcao();
 
         tipoDeAcao.setNome("família");
-        tipoDeAcao2.setNome("divorcio");
+        tipoDeAcao2.setNome("alimento");
 
         Processo processo = new Processo();
         Processo processo2 = new Processo();
